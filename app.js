@@ -98,7 +98,11 @@ app.put("/api/categorias/:id", async (req, res) => {
       req.params.id,
     ]);
 
-    if (consulta.length == 1) {
+    const consulta2 = await qy("SELECT * FROM libro WHERE categoria_id=?", [
+      req.params.id,
+    ]);
+
+    if ((consulta.length == 1) && (consulta2.length == 0)) {
       if (!req.body.nombre) {
         throw new Error("Faltan datos.");
       }
@@ -564,12 +568,3 @@ app.delete("/api/libros/:id", async (req, res) => {
 app.listen(PORT, () => {
   console.log("App corriendo en el puerto ", PORT);
 });
-
-// Integrantes:---
-
-// Lucas Aranguren
-// María Emilia Lesca
-// Ignacio Garcia
-// Sofía Cacace
-// Emmanuel Galera
-// Daniel Flores
